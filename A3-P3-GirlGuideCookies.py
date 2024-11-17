@@ -4,19 +4,64 @@
 #               those guides who go above and beyond in their sales efforts. The organizers
 #               want a program to print the guide list and their prizes.
 
-#Student #:     
-#Student Name:  
+#Student #:     W0402993
+#Student Name:  Andrew Beaver
+
+def openingMessage():
+    print("Girl Guide Cookie Sell-off")
+
+def findHighestSeller(guideList):
+    #find highest amount of cookies sold
+    return max(salesMax[1] for salesMax in guideList)
 
 def main():
-    # YOUR CODE STARTS HERE, each line must be indented (one tab)
+
+    openingMessage()
+
+    #prizes / variables
+    winnerPrize = "Trip to Girl Guide Jamboree in Aruba!"
+    aboveAvgPrize = "Super Seller Badge"
+    leftOvers = "Left over cookies"
+    
+    leftOversLowerBoundary = 0
+
+    guideList = []
+    avgSold = 0
+
+    #Get the numbers the guides
+    numGuides = int(input("\nEnter the number of guides selling cookies: "))
+
+    #Use the number of guides to create a loop
+    #Get names and cookies sold and add to lists
+    for i in range(numGuides):
+        guideName = input("\nEnter the name of guide #{0}: ".format(i + 1))
+        cookiesSold = int(input("Enter the number of boxes sold by {0}: ".format(guideName)))
+        guideList.append([guideName, cookiesSold])
+
+    #Calculate average cookies sold
+    totalSales = sum(salesTotal[1] for salesTotal in guideList)
+    avgSold = totalSales / numGuides
 
 
+    highestSales = findHighestSeller(guideList)
 
+    #Display average cookies sold
+    print("\nThe average number of boxes sold by each guide was {0:.1f}".format(avgSold))
 
-
-
-
-
-    # YOUR CODE ENDS HERE
+    print("\nGuide\t\tPrizes Won:\n")
+    
+    #Establish prize winners, best seller gets trip, above avg gets badge, others with sales get left overs
+    for i in range (numGuides):
+        guideName, cookiesSold = guideList[i]
+        if cookiesSold == highestSales:
+            prize = winnerPrize
+        elif cookiesSold > avgSold:
+            prize = aboveAvgPrize
+        elif cookiesSold > leftOversLowerBoundary and cookiesSold <= avgSold:
+            prize = leftOvers
+        else:
+            prize = ""
+    
+        print("{0}\t\t- {1}".format(guideName, prize))
 
 main()
